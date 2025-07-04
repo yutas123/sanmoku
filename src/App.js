@@ -13,12 +13,15 @@ function Board({ xIsNext, squares, onPlay }) {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
+    const nextSquares = squares.slice();
+    console.log("nextSquares", nextSquares);
     if (xIsNext) {
       nextSquares[i] = 'X';
     } else {
       nextSquares[i] = 'O';
     }
     onPlay(nextSquares);
+    console.log("nextSquares", nextSquares);
   }
 
   const winner = calculateWinner(squares);
@@ -54,15 +57,13 @@ function Board({ xIsNext, squares, onPlay }) {
 export default function Game() {
   const [xIsNext, setXIsNext] = useState(true);
   const [history, setHistory] = useState([Array(9).fill(null)]);
-  console.log(history);
-  console.log(history[8]);
-  console.log(history.length);
   const currentSquares = history[history.length - 1];
-  console.log(currentSquares);
 
   function handlePlay(nextSquares) {
     setHistory([...history, nextSquares]);
     setXIsNext(!xIsNext);
+    console.log("更新前 history:", history);
+    console.log("更新後 history:", nextSquares);
   }
 
   return (
