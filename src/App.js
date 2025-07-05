@@ -20,19 +20,19 @@ function Parent() {
   );
 }
 
-function Child({ hogepiyo }) {
+function Child(props) {
   return (
     <div>
       <h2>子コンポーネント</h2>
-      <button onClick={hogepiyo}>親に知らせる</button>
+      <button onClick={props.hogepiyo}>親に知らせる</button>
     </div>
   );
 }
 
-function Child02({ anpan02 }) {
+function Child02({ anpan }) {
   return (
     <div>
-      <button onClick={anpan02}>色をかえます</button>
+      <button onClick={anpan}>色をかえます</button>
     </div>
   );
 }
