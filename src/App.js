@@ -1,39 +1,36 @@
-// App.jsx / App.tsx
-
-import React from 'react';
-
 function Parent() {
-  function handleMessage() {
-    console.log('✅ 子から親に通知が届いた！');
-  }
-
-  function mekanic() {
-    console.log('anpan実行');
+  function handleNotify(message) {
+    console.log(`📨 子からのメッセージ: ${message}`);
   }
 
   return (
     <div>
-      <h1>親コンポーネント</h1>
-      <Child hogepiyo ={handleMessage} />
-      <Child02 anpan ={mekanic} />
+      <Child00 sendToParent={handleNotify} />
+      <Child01 sendToParent={handleNotify} />
+      <Child02 sendToParent={handleNotify} />
     </div>
   );
 }
 
-function Child(props) {
+// 分割代入を使用
+function Child01({ sendToParent }) {
   return (
-    <div>
-      <h2>子コンポーネント</h2>
-      <button onClick={props.hogepiyo}>親に知らせる</button>
-    </div>
+    <button onClick={() => sendToParent("こんにちは、親！")}>
+      親に挨拶を送る
+    </button>
   );
 }
 
-function Child02({ anpan }) {
+//propsを使用
+function Child02(props) {
+  console.log(props);
   return (
-    <div>
-      <button onClick={anpan}>色をかえます</button>
-    </div>
+    <button>
+      ああ
+    </button>
+    // <button onClick={() => sendToParent("こんにちは、親！")}>
+    //   親に挨拶を送る
+    // </button>
   );
 }
 
