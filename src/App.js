@@ -1,31 +1,43 @@
+// 親コンポーネント
+import { useState } from "react";
+
 function Parent() {
-  function handleNotify(message) {
-    console.log(`📨 子からのメッセージ: ${message}`);
+  const [message, setMessage] = useState("（まだメッセージがありません）");
+
+  function handleNotify(newMessage) {
+    setMessage(newMessage);
   }
 
   return (
     <div>
-      <Child01 sendToParent={handleNotify} />
-      <Child02 sendToParent={handleNotify} />
+      <h2>📩 受信メッセージ：</h2>
+      <p>{message}</p>
+      <ChildForm sendToParent={handleNotify} />
     </div>
   );
 }
 
-// 分割代入を使用
-function Child01({ sendToParent }) {
-  return (
-    <button onClick={() => sendToParent("こんにちは、親！")}>
-      親に挨拶を送る
-    </button>
-  );
-}
+// 子コンポーネント（フォーム入力あり）
+function ChildForm(catchProps) {
+  console.log("受け取ったprops:", catchProps);
+  const hoge = catchProps.sendToParent;
+  const [inputValue, setInputValue] = useState("");
 
-//propsを使用
-function Child02(props) {
+  function handleClick() {
+    hoge(inputValue);
+    setInputValue(""); // 送信後に入力欄をリセット
+  }
+
   return (
-    <button onClick={() => props.sendToParent("こんにちは、親！")}>
-      propsを使用
-    </button>
+    <div>
+      <input
+        type="text"
+        placeholder="親に送りたいメッセージ"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <button onClick={handleClick}>送信</button>
+    </div>
   );
 }
 
