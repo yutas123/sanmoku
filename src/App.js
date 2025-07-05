@@ -12,24 +12,24 @@ function Parent() {
     <div>
       <h2>📩 受信メッセージ：</h2>
       <p>{message}</p>
-      <ChildForm sendToParent={handleNotify} />
+      <ChildA sendToParent={handleNotify} />
+      <ChildB message={message} />
     </div>
   );
 }
 
 // 子コンポーネント（フォーム入力あり）
-function ChildForm(catchProps) {
-  console.log("受け取ったprops:", catchProps);
-  const hoge = catchProps.sendToParent;
+function ChildA({sendToParent}) {
   const [inputValue, setInputValue] = useState("");
 
   function handleClick() {
-    hoge(inputValue);
+    sendToParent(inputValue);
     setInputValue(""); // 送信後に入力欄をリセット
   }
 
   return (
     <div>
+      子コンポーネントA
       <input
         type="text"
         placeholder="親に送りたいメッセージ"
@@ -40,5 +40,15 @@ function ChildForm(catchProps) {
     </div>
   );
 }
+
+function ChildB({ message }) {
+  console.log("受け取ったprops:", message);
+  return (
+    <div>
+      <h3>子コンポーネントB</h3>
+      <p>親からのメッセージ: {message}</p>
+    </div>
+  );
+} 
 
 export default Parent;
