@@ -5,7 +5,6 @@ function Parent() {
 
   return (
     <div>
-      <Child00 sendToParent={handleNotify} />
       <Child01 sendToParent={handleNotify} />
       <Child02 sendToParent={handleNotify} />
     </div>
@@ -23,14 +22,10 @@ function Child01({ sendToParent }) {
 
 //propsを使用
 function Child02(props) {
-  console.log(props);
   return (
-    <button>
-      ああ
+    <button onClick={() => props.sendToParent("こんにちは、親！")}>
+      propsを使用
     </button>
-    // <button onClick={() => sendToParent("こんにちは、親！")}>
-    //   親に挨拶を送る
-    // </button>
   );
 }
 
