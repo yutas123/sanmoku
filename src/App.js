@@ -1,24 +1,60 @@
 import { useState } from "react";
 
-function FruitList() {
-  const [fruits, setFruits] = useState(["りんご", "バナナ", "みかん"]);
+function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: "山田",
+    email: "yamada@gmail.com",
+    comment: "ぼくは山田です"
+  });
 
-  const handleAddFruit = () => {
-    setFruits([...fruits, "もも"]);
+  function handleChange(e) {  
+    var name = e.target.name;
+    var value = e.target.value;
+    setFormData(function(prevData) {
+      return Object.assign({}, prevData, { [name]: value });
+    });
+  }
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("送信されたデータ:", formData);
   };
 
   return (
-    <div>
-      <h2>🍎 果物リスト</h2>
-      <ul>
-        {fruits.map((fruit, index) => (
-          <li key={index}>{fruit}</li>
-        ))}
-      </ul>
-      <button onClick={handleAddFruit}>果物を追加</button>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label>
+        名前：
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label>
+        メール：
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label>
+        コメント：
+        <textarea
+          name="comment"
+          value={formData.comment}
+          onChange={handleChange}
+        />
+      </label>
+
+      <button type="submit">送信</button>
+    </form>
   );
 }
 
-
-export default FruitList;
+export default ContactForm;
