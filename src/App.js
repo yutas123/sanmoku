@@ -5,12 +5,15 @@ export default function MyApp() {
     { title: 'Apple', id: 3 },
   ];
   
-  const listItems = products.map(product =>
-    product.id >= 2 ? (
-    <li key={product.id}>
-      {product.title}
-    </li>
-    ) : null
+  // ifにはreturnを書くのを忘れずに
+  // 条件(三項)演算子は暗黙的にreturnされるので必要ない  
+  const listItems = products.map(product => {
+    if(product.id >= 2){
+      return <li key={product.id}>{product.title}</li>;
+    } else {
+      return null;
+    }
+  }
   );
   
   return (
