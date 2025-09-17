@@ -1,17 +1,36 @@
-import { useState } from 'react';
+import { getImageUrl } from './utils.js'
 
-export default function App() {
-  const [count, setCount] = useState(0);
-  function CountAdd(){
-    setCount(count + 1);
-  }
-
+export default function Profile() {
   return (
-    <div>
-      <button onClick={CountAdd}> click {count} 回数</button>
-      <button onClick={CountAdd}> click {count} 回数</button>
+    <Card>
+      <Avatar
+        size={100}
+        person={{
+          name: 'Katsuko Saruhashi',
+          imageId: 'YfeOqp2'
+        }}
+      />
+    </Card>
+  );
+}
+
+function Avatar({ person, size }) {
+  return (
+    <img
+      className="avatar"
+      src={getImageUrl(person)}
+      alt={person.name}
+      width={size}
+      height={size}
+    />
+  );
+}
+
+function Card({ children }) {
+  return (
+    <div className="card">
+      {children}
     </div>
   );
 }
 
-  
