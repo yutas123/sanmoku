@@ -37,9 +37,9 @@ function Board({ xIsNext, squares, onPlaysss }) {
     <>
       <div className="status">{status}</div>
       <div className="board-row">
+        <Square value={squares[0]} onSquareClick={() => handleClick(1)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[3]} onSquareClick={() => handleClick(2)} />
+        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
       </div>
       <div className="board-row">
         <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
