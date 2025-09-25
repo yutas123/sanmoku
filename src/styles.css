@@ -76,6 +76,25 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.winning-square {
+  background: linear-gradient(145deg, #fbb6ce, #f687b3) !important;
+  box-shadow: 0 4px 20px rgba(251, 182, 206, 0.5) !important;
+  animation: pulse 1.5s infinite;
+}
+
+.winning-square:hover {
+  background: linear-gradient(145deg, #f687b3, #ed64a6) !important;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 .game-info {
   background: rgba(255, 255, 255, 0.9);
   padding: 25px;
