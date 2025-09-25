@@ -23,7 +23,7 @@ function Board({ xIsNext, squares, onPlaysss }) {
     } else {
       nextSquares[i] = 'O';
     }
-    onPlaysss(nextSquares);
+    onPlaysss(nextSquares, i);
     // setSquares(nextSquares);
     // setXIsNext(!xIsNext);
   }
@@ -72,12 +72,17 @@ export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const [isAscending, setIsAscending] = useState(true);
+  const [moveLocations, setMoveLocations] = useState([null]);
   const currentSquareS = history[currentMove];
   const xIsNext = currentMove % 2 === 0;
 
-  function handlePlaya(nextSquares) {
+  function handlePlaya(nextSquares, moveIndex) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    const row = Math.floor(moveIndex / 3);
+    const col = moveIndex % 3;
+    const nextMoveLocations = [...moveLocations.slice(0, currentMove + 1), { row, col }];
     setHistory(nextHistory);
+    setMoveLocations(nextMoveLocations);
     setCurrentMove(nextHistory.length - 1);
   }
 
@@ -91,15 +96,19 @@ export default function Game() {
     console.log(move + `move`);
     let description;
     if (move > 0) {
-      description = 'Go to move #' + move;
+      const location = moveLocations[move];
+      description = `Go to move #${move} (${location.row}, ${location.col})`;
     } else {
       description = 'Go to game start';
     }
     
     if (move === currentMove) {
+      const currentDescription = move > 0 
+        ? `You are at move #${move} (${moveLocations[move].row}, ${moveLocations[move].col})`
+        : `You are at move #${move}`;
       return (
         <li key={move}>
-          <span className="current-move">You are at move #{move}</span>
+          <span className="current-move">{currentDescription}</span>
         </li>
       );
     }
