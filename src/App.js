@@ -73,6 +73,8 @@ export default function Game() {
   const [currentMove, setCurrentMove] = useState(0);
   const [isAscending, setIsAscending] = useState(true);
   const [moveLocations, setMoveLocations] = useState([null]);
+  const [xWins, setXWins] = useState(0);
+  const [oWins, setOWins] = useState(0);
   const currentSquareS = history[currentMove];
   const xIsNext = currentMove % 2 === 0;
 
@@ -84,11 +86,27 @@ export default function Game() {
     setHistory(nextHistory);
     setMoveLocations(nextMoveLocations);
     setCurrentMove(nextHistory.length - 1);
+    
+    // Check if game is won and update win counters
+    const winnerInfo = calculateWinner(nextSquares);
+    if (winnerInfo) {
+      if (winnerInfo.winner === 'X') {
+        setXWins(prev => prev + 1);
+      } else if (winnerInfo.winner === 'O') {
+        setOWins(prev => prev + 1);
+      }
+    }
   }
 
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
     // TODO
+  }
+
+  function resetGame() {
+    setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
+    setMoveLocations([null]);
   }
 
   let moves = history.map((squares, move) => {
@@ -127,6 +145,15 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
+        <div className="score-board">
+          <div className="score">
+            <span className="player-x">Player X: {xWins}</span>
+            <span className="player-o">Player O: {oWins}</span>
+          </div>
+          <button className="reset-button" onClick={resetGame}>
+            New Game
+          </button>
+        </div>
         <Board xIsNext={xIsNext} squares={currentSquareS} onPlaysss={handlePlaya}/>
       </div>
       <div className="game-info">
